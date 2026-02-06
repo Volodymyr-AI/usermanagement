@@ -1,3 +1,7 @@
+using Microsoft.Extensions.Options;
+using UserManagement.Application.Abstractions;
+using UserManagement.Persistence.Token;
+
 namespace UserManagement.WebAPI;
 
 public class Program
@@ -8,6 +12,13 @@ public class Program
 
         // Add services to the container.
         builder.Services.AddAuthorization();
+        builder.Services.Configure<RefreshTokenOptions>(builder.Configuration.GetSection("RefreshTokenOptions"));
+
+        builder.Services.AddSingleton<IRefreshTokenHasher>(sp =>
+        {
+            var opt = sp.GetRequiredService<IOptions<RefreshTokenOptions>>().Value;
+            return new HmacRefreshTokenHasher(opt.HmacKey);
+        });
 
         // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
         builder.Services.AddOpenApi();
@@ -23,25 +34,6 @@ public class Program
         app.UseHttpsRedirection();
 
         app.UseAuthorization();
-
-        var summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
-
-        app.MapGet("/weatherforecast", (HttpContext httpContext) =>
-            {
-                var forecast = Enumerable.Range(1, 5).Select(index =>
-                        new WeatherForecast
-                        {
-                            Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                            TemperatureC = Random.Shared.Next(-20, 55),
-                            Summary = summaries[Random.Shared.Next(summaries.Length)]
-                        })
-                    .ToArray();
-                return forecast;
-            })
-            .WithName("GetWeatherForecast");
 
         app.Run();
     }
