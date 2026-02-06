@@ -1,5 +1,109 @@
-bin/
-obj/
-/packages/
-riderModule.iml
-/_ReSharper.Caches/
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Ww][Ii][Nn]32/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+# Visual Studio cache/options
+.vs/
+.vscode/
+
+# Rider
+.idea/
+*.sln.iml
+*.DotSettings.user
+
+# Visual Studio Code
+.vscode/
+*.code-workspace
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Test Results
+TestResults/
+*.trx
+*.coverage
+
+# NuGet
+.nuget/
+*.nupkg
+*.snupkg
+*.symbols.nupkg
+packages/
+.nuget/packages/
+.nuget/NuGet.Config
+.nuget/NuGet.exe
+.nuget/NuGet.targets
+
+# Local extension sdk
+[Ll]ocal[Ee]xtension[Ss]dk/
+
+# Diagnostic reports
+diagnostic.json
+diagnostic.*.json
+
+# User preferences
+.editorconfig.user
+
+# Rider specific
+.idea_modules/
+
+# OS files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# Build artifacts
+artifacts/
+publish/
+PublishProfiles/
+
+# ReSharper
+_ReSharper*/
+*.resharper
+*.resharper.user
+
+# JetBrains
+.idea/
+*.iml
+out/
+
+# Visual Studio temporary files
+*.tmp
+*.temp
+*.bak
+*.backup
+
+# Application insights
+ApplicationInsights.config
+
+# npm
+node_modules/
+npm-debug.log
+
+# Entity Framework
+*.edmx.diagram
+
+# StyleCop
+StyleCopViolations.xml
+
+# Coverage
+OpenCover/
+*.coverage
