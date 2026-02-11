@@ -3,6 +3,7 @@ using UserManagement.Application.Abstractions;
 using UserManagement.Persistence.Auth;
 using UserManagement.Persistence.Auth.Abstractions;
 using UserManagement.Persistence.Token;
+using UserManagement.WebAPI.DTO;
 
 namespace UserManagement.WebAPI;
 
@@ -14,7 +15,7 @@ public class Program
 
         // Add services to the container.
         builder.Services.AddAuthorization();
-        builder.Services.Configure<RefreshTokenOptions>(builder.Configuration.GetSection("RefreshTokenOptions"));
+        builder.Services.Configure<RefreshTokenOptions>(builder.Configuration.GetSection("RefreshToken"));
         builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("Jwt"));
 
         builder.Services.AddSingleton<IRefreshTokenHasher>(sp =>
@@ -36,8 +37,17 @@ public class Program
         }
 
         app.UseHttpsRedirection();
-
+        
+        //app.UseAuthentication();
         app.UseAuthorization();
+
+        app.MapGet("/.well-known/jwks.json", (IRsaKeyService rsaKeyService, HttpResponse res) =>
+        {
+            var seconds = (int)TimeSpan.FromHours(1).TotalSeconds;
+            res.Headers.CacheControl = "public, max-age=" + seconds;
+            var keys = rsaKeyService.GetPublicJwks();
+            return Results.Ok(new JwksResponse(keys));
+        });
 
         app.Run();
     }
